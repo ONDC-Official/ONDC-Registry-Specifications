@@ -2,6 +2,7 @@ subscribe:
   context: &context
     $ref: "./context.yaml"
   message:
-    intent:
-      category: &category
-          $ref: './category.yaml'
+    network_participant:
+      type: &category
+          $ref: './network_participant_type.yaml'
+      

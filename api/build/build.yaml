@@ -857,36 +857,77 @@ servers:
 x-enum:
   subscribe:
     context:
-      location:
-        country:
-          code:
-            - code: IND
-              description: Represents the country
-              reference: <PR/Issue/Discussion Links md format text>
-        city:
-          code:
-            - code: std:080
-              description: >-
-                Represent the city code that identifies the cities. In case of
-                '*' it will fetch all the cities where service is being
-                provided.
-              reference: <PR/Issue/Discussion Links md format text>
-      domain:
-        - code: ONDC:FIS12
-          description: Updated domain namespace
+      ops_no:
+        - code: 1
+          description: Buyer New entity registration
+          reference: <PR/Issue/Discussion Links md format text>
+        - code: 2
+          description: Non-MSN Seller New entity registration
+          reference: <PR/Issue/Discussion Links md format text>
+        - code: 3
+          description: MSN Seller New entity registration
+          reference: <PR/Issue/Discussion Links md format text>
+        - code: 4
+          description: Buyer and Non-MSN Seller new registration
+          reference: <PR/Issue/Discussion Links md format text>
+        - code: 5
+          description: Buyer and MSN Seller new registration
+          reference: <PR/Issue/Discussion Links md format text>
+        - code: 6
+          description: Buyer/Non-MSN/MSN SellerApp key rotation
+          reference: <PR/Issue/Discussion Links md format text>
+        - code: 7
+          description: MSN Seller changing keys for Seller on Record
+          reference: <PR/Issue/Discussion Links md format text>
+        - code: 8
+          description: Buyer adding New network participant for Non-MSN Seller
+          reference: <PR/Issue/Discussion Links md format text>
+        - code: 9
+          description: Buyer adding New network participant for MSN Seller
+          reference: <PR/Issue/Discussion Links md format text>
+        - code: 10
+          description: MSN Seller adding new seller on record
+          reference: <PR/Issue/Discussion Links md format text>
+        - code: 11
+          description: BuyerApp/SellerApp amending city
+          reference: <PR/Issue/Discussion Links md format text>
+        - code: 12
+          description: MSN Seller amending Seller on record city
           reference: <PR/Issue/Discussion Links md format text>
     message:
-      intent:
-        category:
-          descriptor:
+      network_participant:
+        type:
+          code:
+            - code: buyerApp
+              description: >-
+                Describes an unsecured credit provided by financial institutions
+                based on criteria like employment history, repayment capacity,
+                income level, profession and credit history
+              reference: <PR/Issue/Discussion Links md format text
+            - code: sellerApp
+              description: >-
+                Describes an unsecured credit provided by financial institutions
+                based on criteria like employment history, repayment capacity,
+                income level, profession and credit history
+              reference: <PR/Issue/Discussion Links md format text
+            - code: gateway
+              description: >-
+                Describes an unsecured credit provided by financial institutions
+                based on criteria like employment history, repayment capacity,
+                income level, profession and credit history
+              reference: <PR/Issue/Discussion Links md format text
+          city_code:
             code:
-              - code: PERSONAL_LOAN
+              - code: std:080
                 description: >-
-                  Describes an unsecured credit provided by financial
-                  institutions based on criteria like employment history,
-                  repayment capacity, income level, profession and credit
-                  history
-                reference: <PR/Issue/Discussion Links md format text
+                  Represent the city code that identifies the cities. In case of
+                  '*' it will fetch all the cities where service is being
+                  provided.
+                reference: <PR/Issue/Discussion Links md format text>
+          domain:
+            - code: nic2004:52110
+              description: Domain to be subscribed
+              reference: <PR/Issue/Discussion Links md format text>
 x-tags:
   search:
     message:

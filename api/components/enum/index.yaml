@@ -1,0 +1,7 @@
+subscribe:
+  context: &context
+    $ref: "./context.yaml"
+  message:
+    intent:
+      category: &category
+          $ref: './category.yaml'

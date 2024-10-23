@@ -1,0 +1,5 @@
+code:
+  - Event: Application submittion failure
+    Description: Buyer application could not submit the loan application to the lender/s
+    From: BAP
+    code: 80101

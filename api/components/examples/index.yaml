@@ -1,5 +1,5 @@
-personal-loan:
-  summary: personal-loan
-  description: personal-loan
+registry:
+  summary: registry
+  description: registry
   example_set:
     $ref: "./personal-loans/personal-loan.yaml"

@@ -1,3 +1,4 @@
-personal-loan: 
+registry: 
   attribute_set:
-    $ref: './personal-loans/index.yaml'
+    lookup: []
+    # $ref: './personal-loans/index.yaml'

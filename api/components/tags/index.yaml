@@ -2,4 +2,4 @@ search:
   message:
     intent:
       payment:
-        $ref: "./tag-group.yaml#/payment"
+        $ref: "./tag-group.yaml#/registry"

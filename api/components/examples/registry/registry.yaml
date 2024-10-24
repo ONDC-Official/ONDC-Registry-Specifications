@@ -1,0 +1,7 @@
+
+lookup:
+  examples:
+    - summary: lookup
+      description: TBD
+      value:
+        $ref: "./lookup.yaml"

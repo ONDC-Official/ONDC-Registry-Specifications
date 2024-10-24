@@ -1,13 +1,13 @@
 
 code: 
   - code: buyerApp
-    description: Describes an unsecured credit provided by financial institutions based on criteria like employment history, repayment capacity, income level, profession and credit history
+    description: Describes that subscription call is for registering buyer app (bap)
     reference: <PR/Issue/Discussion Links md format text  
   - code: sellerApp
-    description: Describes an unsecured credit provided by financial institutions based on criteria like employment history, repayment capacity, income level, profession and credit history
+    description: Describes that subscription call is for registering seller app (bpp)
     reference: <PR/Issue/Discussion Links md format text  
   - code: gateway
-    description: Describes an unsecured credit provided by financial institutions based on criteria like employment history, repayment capacity, income level, profession and credit history
+    description: Describes that subscription call is for registering as a gateway
     reference: <PR/Issue/Discussion Links md format text  
 city_code:
       - code: std:080

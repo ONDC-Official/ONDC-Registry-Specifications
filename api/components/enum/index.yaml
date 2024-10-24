@@ -34,9 +34,12 @@ lookup:
               description:  Represents the unique key id.
               reference:  <PR/Issue/Discussion Links md format text>   
           type: &type
-            - code: sellerApp(BPP) or buyerApp(BAP)
-              description: Represents the type i.e. sellerApp(BPP) or buyerApp(BAP).
-              reference:  <PR/Issue/Discussion Links md format text>   
+            - code: buyerApp
+              description: Describes that subscription call is for registering buyer app (bap)
+              reference: <PR/Issue/Discussion Links md format text  
+            - code: sellerApp
+              description: Describes that subscription call is for registering seller app (bpp)
+              reference: <PR/Issue/Discussion Links md format text  
 
 vlookup: 
   context: &context

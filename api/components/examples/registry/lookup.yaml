@@ -1,0 +1,7 @@
+
+subscriber_id: string
+country: IND
+ukId: string
+city: std:080
+domain: "nic2004:52110"
+type: BAP or BPP

@@ -1,7 +1,0 @@
-
-lookup:
-  examples:
-    - summary: update-request-prepayment
-      description: TBD
-      value:
-        $ref: "./update/update-request-prepayment.yaml"

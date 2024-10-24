@@ -2,4 +2,4 @@ registry:
   summary: registry
   description: registry
   example_set:
-    $ref: "./personal-loans/personal-loan.yaml"
+    $ref: "./registry/registry.yaml"

@@ -900,21 +900,16 @@ x-enum:
           code: &ref_2
             - code: buyerApp
               description: >-
-                Describes an unsecured credit provided by financial institutions
-                based on criteria like employment history, repayment capacity,
-                income level, profession and credit history
+                Describes that subscription call is for registering buyer app
+                (bap)
               reference: <PR/Issue/Discussion Links md format text
             - code: sellerApp
               description: >-
-                Describes an unsecured credit provided by financial institutions
-                based on criteria like employment history, repayment capacity,
-                income level, profession and credit history
+                Describes that subscription call is for registering seller app
+                (bpp)
               reference: <PR/Issue/Discussion Links md format text
             - code: gateway
-              description: >-
-                Describes an unsecured credit provided by financial institutions
-                based on criteria like employment history, repayment capacity,
-                income level, profession and credit history
+              description: Describes that subscription call is for registering as a gateway
               reference: <PR/Issue/Discussion Links md format text
           city_code: &ref_3
             - code: std:080
@@ -952,9 +947,16 @@ x-enum:
             description: Represents the unique key id.
             reference: <PR/Issue/Discussion Links md format text>
         type: &ref_6
-          - code: sellerApp(BPP) or buyerApp(BAP)
-            description: Represents the type i.e. sellerApp(BPP) or buyerApp(BAP).
-            reference: <PR/Issue/Discussion Links md format text>
+          - code: buyerApp
+            description: >-
+              Describes that subscription call is for registering buyer app
+              (bap)
+            reference: <PR/Issue/Discussion Links md format text
+          - code: sellerApp
+            description: >-
+              Describes that subscription call is for registering seller app
+              (bpp)
+            reference: <PR/Issue/Discussion Links md format text
   vlookup:
     context: *ref_0
     message:
@@ -1051,34 +1053,15 @@ x-examples:
     example_set:
       lookup:
         examples:
-          - summary: update-request-prepayment
+          - summary: lookup
             description: TBD
             value:
-              context:
-                domain: ONDC:FIS12
-                location:
-                  country:
-                    code: IND
-                  city:
-                    code: '*'
-                transaction_id: a9aaecca-10b7-4d19-b640-b047a7c62196
-                message_id: bb579fb8-cb82-4824-be12-fcbc405b6608
-                action: update
-                timestamp: '2023-09-05T05:23:03.443Z'
-                version: 2.0.1
-                bap_uri: https://bap.credit.becknprotocol.io/
-                bap_id: bap.credit.becknprotocol.io
-                ttl: PT10M
-                bpp_id: bpp.credit.becknprotocol.org
-                bpp_uri: https://bpp.credit.becknprotocol.org
-              message:
-                lookup:
-                  subscriber_id: string
-                  country: IND
-                  ukId: string
-                  city: std:080
-                  domain: nic2004:52110
-                  type: BAP or BPP
+              subscriber_id: string
+              country: IND
+              ukId: string
+              city: std:080
+              domain: nic2004:52110
+              type: BAP or BPP
 x-attributes:
   personal-loan:
     attribute_set:

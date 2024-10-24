@@ -16,13 +16,10 @@ context:
   bpp_id: bpp.credit.becknprotocol.org
   bpp_uri: https://bpp.credit.becknprotocol.org
 message:
-  update_target: payments
-  order:
-    id: 66B7AEDF45
-    payments:
-      - params:
-          amount: "20000"
-          currency: INR
-        status: NOT-PAID
-        time:
-          label: Pre-Payment
+  lookup:
+    subscriber_id: string
+    country: IND
+    ukId: string
+    city: std:080
+    domain: "nic2004:52110"
+    type: BAP or BPP

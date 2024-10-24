@@ -856,7 +856,7 @@ servers:
     url: https://virtserver.swaggerhub.com/ONDC/ONDC-Registry-Onboarding/2.0.5
 x-enum:
   subscribe:
-    context:
+    context: &ref_0
       ops_no:
         - code: 1
           description: Buyer New entity registration
@@ -896,8 +896,8 @@ x-enum:
           reference: <PR/Issue/Discussion Links md format text>
     message:
       network_participant:
-        type:
-          code:
+        type: &ref_1
+          code: &ref_2
             - code: buyerApp
               description: >-
                 Describes an unsecured credit provided by financial institutions
@@ -916,18 +916,55 @@ x-enum:
                 based on criteria like employment history, repayment capacity,
                 income level, profession and credit history
               reference: <PR/Issue/Discussion Links md format text
-          city_code:
-            code:
-              - code: std:080
-                description: >-
-                  Represent the city code that identifies the cities. In case of
-                  '*' it will fetch all the cities where service is being
-                  provided.
-                reference: <PR/Issue/Discussion Links md format text>
-          domain:
+          city_code: &ref_3
+            - code: std:080
+              description: >-
+                Represent the city code that identifies the cities. In case of
+                '*' it will fetch all the cities where service is being
+                provided.
+              reference: <PR/Issue/Discussion Links md format text>
+          domain: &ref_4
             - code: nic2004:52110
               description: Domain to be subscribed
               reference: <PR/Issue/Discussion Links md format text>
+  callback_url/on_subscribe:
+    context: *ref_0
+    message:
+      network_participant:
+        type: *ref_1
+  lookup:
+    context: *ref_0
+    message:
+      lookup:
+        code: *ref_2
+        city_code: *ref_3
+        domain: *ref_4
+        subscriber_id: &ref_7
+          - code: sit.grab.in/ondc
+            description: Represents the subscriber_id that identifies the subscriber.
+            reference: <PR/Issue/Discussion Links md format text>
+        country: &ref_5
+          - code: IND
+            description: Represents the country
+            reference: <PR/Issue/Discussion Links md format text>
+        ukId:
+          - code: string
+            description: Represents the unique key id.
+            reference: <PR/Issue/Discussion Links md format text>
+        type: &ref_6
+          - code: sellerApp(BPP) or buyerApp(BAP)
+            description: Represents the type i.e. sellerApp(BPP) or buyerApp(BAP).
+            reference: <PR/Issue/Discussion Links md format text>
+  vlookup:
+    context: *ref_0
+    message:
+      search_parameters:
+        code: *ref_2
+        city_code: *ref_3
+        domain: *ref_4
+        country: *ref_5
+        type: *ref_6
+        subscriber_id: *ref_7
 x-tags:
   search:
     message:
@@ -993,9 +1030,20 @@ x-tags:
                   reference: <PR/Issue/Discussion Links md format text>
 x-flows:
   - summary: Registry sample flow
-    details: null
-    references: if any
-    steps: null
+    details:
+      - description: >-
+          The illustrative flow depicts the comprehensive process of Registry ,
+          showcasing the sequential steps and interactions involved in a
+          Registry Process.
+        mermaid: |-
+          sequenceDiagram
+            title Initializing Registry
+            participant Network Participant
+            participant Registry
+            Network Participant->>Registry: subscribe
+            Registry->>Network Participant: (callback_url/on_subscribe) challenge
+            Network Participant->>Registry: decrypt challenge
+            Registry-->>Network Participant: Ack
 x-examples:
   registry:
     summary: registry
@@ -1024,16 +1072,13 @@ x-examples:
                 bpp_id: bpp.credit.becknprotocol.org
                 bpp_uri: https://bpp.credit.becknprotocol.org
               message:
-                update_target: payments
-                order:
-                  id: 66B7AEDF45
-                  payments:
-                    - params:
-                        amount: '20000'
-                        currency: INR
-                      status: NOT-PAID
-                      time:
-                        label: Pre-Payment
+                lookup:
+                  subscriber_id: string
+                  country: IND
+                  ukId: string
+                  city: std:080
+                  domain: nic2004:52110
+                  type: BAP or BPP
 x-attributes:
   personal-loan:
     attribute_set:

@@ -10,7 +10,6 @@ code:
     description: Describes an unsecured credit provided by financial institutions based on criteria like employment history, repayment capacity, income level, profession and credit history
     reference: <PR/Issue/Discussion Links md format text  
 city_code:
-    code:
       - code: std:080
         description: Represent the city code that identifies the cities. In case of '*' it will fetch all the cities where service is being provided.
         reference: <PR/Issue/Discussion Links md format text>      

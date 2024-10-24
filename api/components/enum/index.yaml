@@ -5,4 +5,46 @@ subscribe:
     network_participant:
       type: &category
           $ref: './network_participant_type.yaml'
-      
+
+callback_url/on_subscribe:
+  context: &context
+    $ref: "./context.yaml"
+  message:
+    network_participant:
+      type: &category
+          $ref: './network_participant_type.yaml'
+
+lookup:
+  context: &context
+    $ref: "./context.yaml"
+  message: 
+    lookup: 
+      &category
+          $ref: './network_participant_type.yaml'
+          subscriber_id: &subscriber_id
+            - code: sit.grab.in/ondc
+              description: Represents the subscriber_id that identifies the subscriber. 
+              reference:  <PR/Issue/Discussion Links md format text>   
+          country: &country
+            - code: IND
+              description: Represents the country
+              reference: <PR/Issue/Discussion Links md format text>      
+          ukId: 
+            - code: string
+              description:  Represents the unique key id.
+              reference:  <PR/Issue/Discussion Links md format text>   
+          type: &type
+            - code: sellerApp(BPP) or buyerApp(BAP)
+              description: Represents the type i.e. sellerApp(BPP) or buyerApp(BAP).
+              reference:  <PR/Issue/Discussion Links md format text>   
+
+vlookup: 
+  context: &context
+    $ref: "./context.yaml"
+  message:
+    search_parameters: 
+        &category
+          $ref: './network_participant_type.yaml'
+          country:  *country
+          type: *type
+          subscriber_id: *subscriber_id

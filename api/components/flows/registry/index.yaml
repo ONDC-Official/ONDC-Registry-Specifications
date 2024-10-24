@@ -1,4 +1,15 @@
 summary: Registry sample flow
 details:
-references: if any
-steps:
+  - description:
+      The illustrative flow depicts the comprehensive process of Registry
+      , showcasing the sequential steps and interactions involved in
+      a Registry Process.
+    mermaid: |-
+      sequenceDiagram
+        title Initializing Registry
+        participant Network Participant
+        participant Registry
+        Network Participant->>Registry: subscribe
+        Registry->>Network Participant: (callback_url/on_subscribe) challenge
+        Network Participant->>Registry: decrypt challenge
+        Registry-->>Network Participant: Ack

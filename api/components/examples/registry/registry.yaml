@@ -1,7 +1,14 @@
 
-lookup:
+# lookup:
+#   examples:
+#     - summary: lookup
+#       description: TBD
+#       value:
+#         $ref: "./lookup.yaml"
+
+subscribe:
   examples:
-    - summary: lookup
+    - summary: subscribe
       description: TBD
       value:
-        $ref: "./lookup.yaml"
+        $ref: "./subscribe/subscribe.yaml"

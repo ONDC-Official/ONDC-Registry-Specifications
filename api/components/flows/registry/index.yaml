@@ -13,3 +13,23 @@ details:
         Registry->>Network Participant: (callback_url/on_subscribe) challenge
         Network Participant->>Registry: decrypt challenge
         Registry-->>Network Participant: Ack
+
+steps:
+  - summary: Registry
+    api: subscribe
+    details:
+      - description: subscribe
+        mermaid: >-
+          
+    example:
+      value:
+        $ref: "../../examples/registry/subscribe/subscribe.yaml"
+  - summary:  On-subscribe
+    api: on_subscribe
+    details:
+      - description: on_subscribe
+        mermaid: >-
+            
+    example:
+      value:
+        $ref: "../../examples/registry/subscribe/subscribe.yaml"      

@@ -1077,7 +1077,14 @@ x-attributes:
     attribute_set:
       lookup: []
 x-errorcodes:
-  code: []
+  - Event: POLICY-ERROR
+    Description: Subscriber id not whitelisted
+    From: null
+    code: 132
+  - Event: null
+    Description: OCSP failed
+    From: null
+    code: null
 x-tlc:
   code: []
 x-featureui:

@@ -1,3 +1,4 @@
+code:
   - Event: POLICY-ERROR
     Description: Subscriber id not whitelisted
     From: 
@@ -5,4 +6,4 @@
   - Event: 
     Description: OCSP failed
     From: 
-    code:
+    code: 133

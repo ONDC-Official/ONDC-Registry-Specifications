@@ -1,4 +1,4 @@
-registry: 
-  attribute_set:
-    lookup: []
-    # $ref: './personal-loans/index.yaml'
+# registry: 
+#   attribute_set:
+#     lookup: []
+#     # $ref: './personal-loans/index.yaml'

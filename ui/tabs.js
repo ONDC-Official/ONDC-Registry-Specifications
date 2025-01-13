@@ -3,18 +3,17 @@
 
 function onFirstLoad(build_spec) {
       let data = build_spec;
-      const xProperties = ["x-enum", "x-tags", "x-examples", "x-flows", "x-attributes", "x-errorcodes", "x-tlc","x-featureui","x-sandboxui", "x-testcasesui", "x-changeLog"];
+      console.log('data', data)
+      const xProperties = ["x-enum", "x-examples", "x-flows", "x-attributes", "x-errorcodes", "x-tlc","x-featureui","x-sandboxui", "x-testcasesui", "x-changeLog"];
       const dropdown =  document.getElementById("contract-dropdown");
       const branch_name = dropdown.options[dropdown.selectedIndex].text;
-      console.log("data::::::::", data)
+      console.log('anuj')
       xProperties.forEach((xProperty) => {
+        console.log('data[xProperty]', data[xProperty])
         if (data[xProperty]) {
           switch (xProperty) {
             case "x-enum":
               initSchema(data[xProperty]);
-              break;
-            case "x-tags":
-              initTag(data[xProperty]);
               break;
             case "x-examples":
               loadExample(data[xProperty]);
@@ -23,6 +22,7 @@ function onFirstLoad(build_spec) {
               loadFlows(data[xProperty]);
               break;
             case "x-attributes":
+              // shouldDisplay(data[xProperty].code,"attribute-navbar")
               loadAttributes(data[xProperty]);
               break;
             case "x-errorcodes":
@@ -54,6 +54,9 @@ function onFirstLoad(build_spec) {
         } else {            
             //remove from dom if not found
             switch(`${xProperty}`){
+              case "x-attributes":
+                shouldDisplay([],"attribute-navbar")
+                break;
               case "x-featureui":
                 shouldDisplay([],"feature-ui-nav")
                 break;

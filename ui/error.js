@@ -7,15 +7,18 @@ function loadErrors(data) {
   }
   errors = data;
   const indexKey = Object.keys(errors);
+  console.log(22)
   addErrorSets(indexKey[0]);
 }
 
 function addErrorSets(option) {
+  console.log(33)
   var elements = document.getElementsByClassName("error-row");
   while (elements.length > 0) {
     elements[0].parentNode.removeChild(elements[0]);
   }
   const object = errors[option]
+  console.log(333, object, errors[option])
   object.forEach(function (key) {
     var table = document.getElementById("errorset");
     const newRow = document.createElement("tr");

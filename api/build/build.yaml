@@ -856,97 +856,48 @@ servers:
     url: https://virtserver.swaggerhub.com/ONDC/ONDC-Registry-Onboarding/2.0.5
 x-enum:
   subscribe:
-    context: &ref_0
-      ops_no:
-        - code: 1
-          description: Buyer New entity registration
-          reference: <PR/Issue/Discussion Links md format text>
-        - code: 2
-          description: Non-MSN Seller New entity registration
-          reference: <PR/Issue/Discussion Links md format text>
-        - code: 3
-          description: MSN Seller New entity registration
-          reference: <PR/Issue/Discussion Links md format text>
-        - code: 4
-          description: Buyer and Non-MSN Seller new registration
-          reference: <PR/Issue/Discussion Links md format text>
-        - code: 5
-          description: Buyer and MSN Seller new registration
-          reference: <PR/Issue/Discussion Links md format text>
-        - code: 6
-          description: Buyer/Non-MSN/MSN SellerApp key rotation
-          reference: <PR/Issue/Discussion Links md format text>
-        - code: 7
-          description: MSN Seller changing keys for Seller on Record
-          reference: <PR/Issue/Discussion Links md format text>
-        - code: 8
-          description: Buyer adding New network participant for Non-MSN Seller
-          reference: <PR/Issue/Discussion Links md format text>
-        - code: 9
-          description: Buyer adding New network participant for MSN Seller
-          reference: <PR/Issue/Discussion Links md format text>
-        - code: 10
-          description: MSN Seller adding new seller on record
-          reference: <PR/Issue/Discussion Links md format text>
-        - code: 11
-          description: BuyerApp/SellerApp amending city
-          reference: <PR/Issue/Discussion Links md format text>
-        - code: 12
-          description: MSN Seller amending Seller on record city
-          reference: <PR/Issue/Discussion Links md format text>
+    context:
+      operation:
+        ops_no:
+          - code: 1
+            description: Buyer New entity registration
+            reference: <PR/Issue/Discussion Links md format text>
+          - code: 2
+            description: Non-MSN Seller New entity registration
+            reference: <PR/Issue/Discussion Links md format text>
+          - code: 3
+            description: MSN Seller New entity registration
+            reference: <PR/Issue/Discussion Links md format text>
+          - code: 4
+            description: Buyer and Non-MSN Seller new registration
+            reference: <PR/Issue/Discussion Links md format text>
+          - code: 5
+            description: Buyer and MSN Seller new registration
+            reference: <PR/Issue/Discussion Links md format text>
+          - code: 6
+            description: Buyer/Non-MSN/MSN SellerApp key rotation
+            reference: <PR/Issue/Discussion Links md format text>
+          - code: 7
+            description: MSN Seller changing keys for Seller on Record
+            reference: <PR/Issue/Discussion Links md format text>
+          - code: 8
+            description: Buyer adding New network participant for Non-MSN Seller
+            reference: <PR/Issue/Discussion Links md format text>
+          - code: 9
+            description: Buyer adding New network participant for MSN Seller
+            reference: <PR/Issue/Discussion Links md format text>
+          - code: 10
+            description: MSN Seller adding new seller on record
+            reference: <PR/Issue/Discussion Links md format text>
+          - code: 11
+            description: BuyerApp/SellerApp amending city
+            reference: <PR/Issue/Discussion Links md format text>
+          - code: 12
+            description: MSN Seller amending Seller on record city
+            reference: <PR/Issue/Discussion Links md format text>
     message:
       network_participant:
-        type: &ref_1
-          code: &ref_2
-            - code: buyerApp
-              description: >-
-                Describes that subscription call is for registering buyer app
-                (bap)
-              reference: <PR/Issue/Discussion Links md format text
-            - code: sellerApp
-              description: >-
-                Describes that subscription call is for registering seller app
-                (bpp)
-              reference: <PR/Issue/Discussion Links md format text
-            - code: gateway
-              description: Describes that subscription call is for registering as a gateway
-              reference: <PR/Issue/Discussion Links md format text
-          city_code: &ref_3
-            - code: std:080
-              description: >-
-                Represent the city code that identifies the cities. In case of
-                '*' it will fetch all the cities where service is being
-                provided.
-              reference: <PR/Issue/Discussion Links md format text>
-          domain: &ref_4
-            - code: nic2004:52110
-              description: Domain to be subscribed
-              reference: <PR/Issue/Discussion Links md format text>
-  callback_url/on_subscribe:
-    context: *ref_0
-    message:
-      network_participant:
-        type: *ref_1
-  lookup:
-    context: *ref_0
-    message:
-      lookup:
-        code: *ref_2
-        city_code: *ref_3
-        domain: *ref_4
-        subscriber_id: &ref_7
-          - code: sit.grab.in/ondc
-            description: Represents the subscriber_id that identifies the subscriber.
-            reference: <PR/Issue/Discussion Links md format text>
-        country: &ref_5
-          - code: IND
-            description: Represents the country
-            reference: <PR/Issue/Discussion Links md format text>
-        ukId:
-          - code: string
-            description: Represents the unique key id.
-            reference: <PR/Issue/Discussion Links md format text>
-        type: &ref_6
+        type:
           - code: buyerApp
             description: >-
               Describes that subscription call is for registering buyer app
@@ -957,16 +908,19 @@ x-enum:
               Describes that subscription call is for registering seller app
               (bpp)
             reference: <PR/Issue/Discussion Links md format text
-  vlookup:
-    context: *ref_0
-    message:
-      search_parameters:
-        code: *ref_2
-        city_code: *ref_3
-        domain: *ref_4
-        country: *ref_5
-        type: *ref_6
-        subscriber_id: *ref_7
+          - code: gateway
+            description: Describes that subscription call is for registering as a gateway
+            reference: <PR/Issue/Discussion Links md format text
+        city_code:
+          - code: std:080
+            description: >-
+              Represent the city code that identifies the cities. In case of '*'
+              it will fetch all the cities where service is being provided.
+            reference: <PR/Issue/Discussion Links md format text>
+        domain:
+          - code: nic2004:52110
+            description: Domain to be subscribed
+            reference: <PR/Issue/Discussion Links md format text>
 x-flows:
   - summary: Registry sample flow
     details:
@@ -990,13 +944,13 @@ x-flows:
           - description: subscribe
             mermaid: ''
         example:
-          value: &ref_8
+          value: &ref_0
             context:
               operation:
                 ops_no: 1
             message:
               request_id: 27baa06d-f90a-486c-85e5-cc621b787f04
-              timestamp: 2022-07-08T13:44:54.101Z
+              timestamp: '2022-07-08T13:44:54.101Z'
               entity:
                 gst:
                   legal_entity_name: ABC Incorporates
@@ -1007,7 +961,6 @@ x-flows:
                 pan:
                   name_as_per_pan: ABC Incorporates
                   pan_no: ASDFP7657Q
-                  date_of_incorporation: 23/06/1982
                 name_of_authorised_signatory: Anand Sharma
                 address_of_authorised_signatory: 405, Pinnacle House, Kandiwali, Mumbai 400001
                 email_id: anand.sharma@abc.com
@@ -1019,8 +972,8 @@ x-flows:
                 key_pair:
                   signing_public_key: QSax2KT4UiTUWUqoVUaEcWhBcGTTNu+Sf8EMDRY1GaE=
                   encryption_public_key: O74ukMymk4KZnVs3sZhU2U7RXpaZ/qiOUMk5NWt6rbI=
-                  valid_from: 2022-07-08T13:44:54.101Z
-                  valid_until: 2022-07-08T13:44:54.101Z
+                  valid_from: '2022-07-08T13:44:54.101Z'
+                  valid_until: '2022-07-08T13:44:54.101Z'
               network_participant:
                 - subscriber_url: /bapl
                   domain: nic2004:52110
@@ -1034,7 +987,7 @@ x-flows:
           - description: on_subscribe
             mermaid: ''
         example:
-          value: *ref_8
+          value: *ref_0
 x-examples:
   registry:
     summary: registry
@@ -1044,7 +997,7 @@ x-examples:
         examples:
           - summary: subscribe
             description: TBD
-            value: *ref_8
+            value: *ref_0
 x-errorcodes:
   code:
     - Event: POLICY-ERROR

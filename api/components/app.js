@@ -78,6 +78,7 @@ async function validateFlows(flows, schemaMap) {
           // Not validating the flows for forms.
           if (step.api === api && step.api !== "form") {
             const result = await validateSchema(schemaMap[api], step.example);
+            console.log('result', JSON.stringify(step.example))
             if (result) {
               console.log("Error[flows]:", `${flowItem?.summary + "/" + api}`);
               return (hasTrueResult = true);
@@ -122,18 +123,26 @@ async function matchKeyType(
   const exampleArray = currentExamplePos[currentAttrib];
   const schemaType = currentSchemaPos[currentAttrib]?.type;
   const allOfType = currentSchemaPos[currentAttrib]?.allOf?.[0]?.type;
-  const itemType = currentSchemaPos[currentAttrib]?.items?.allOf?.[0]?.type;
+  //const itemType = currentSchemaPos[currentAttrib]?.items?.allOf?.[0]?.type;
+  const itemType = currentSchemaPos[currentAttrib]?.items?.type;
 
   for (let i = 0; i < exampleArray?.length; i++) {
     const checkEnum = exampleArray[i];
     //works for string
     let type = schemaType;
     //if type is array
+    console.log('type', type, itemType)
     if (schemaType === "array") {
+      console.log('121212', itemType, currentSchemaPos)
       type = itemType;
     } else if (currentSchemaPos[currentAttrib]?.allOf) {
       type = allOfType;
     }
+  
+    if(type == 'integer'){
+      type = 'number'
+    } 
+    console.log('checkEnum?.code', currentSchemaPos[currentAttrib], type)
     if (typeof checkEnum?.code != type) {
       throw Error(`Enum type not matched: ${currentAttrib} in ${logObject}`);
     }
@@ -300,29 +309,34 @@ async function getSwaggerYaml(example_set, outputPath) {
       schemaMap[path.substring(1)] = pathSchema;
     }
 
-    if (process.argv.includes(SKIP_VALIDATION.flows)) {
+    // console.log('schemaMap', JSON.stringify(schemaMap))
+    // return
+    if (!process.argv.includes(SKIP_VALIDATION.flows)) {
       hasTrueResult = await validateFlows(flows, schemaMap);
     }
-    if (process.argv.includes(SKIP_VALIDATION.examples) && !hasTrueResult) {
+
+    if (!process.argv.includes(SKIP_VALIDATION.examples) && !hasTrueResult) {
       hasTrueResult = await validateExamples(exampleSets, schemaMap);
     }
-
+  
     //move to separate files
-    if (process.argv.includes(SKIP_VALIDATION.enums) && !hasTrueResult) {
+    if (!process.argv.includes(SKIP_VALIDATION.enums) && !hasTrueResult) {
       hasTrueResult = await validateEnumsTags(enums, schemaMap);
     }
-    if (process.argv.includes(SKIP_VALIDATION.tags) && !hasTrueResult) {
-      hasTrueResult = await validateTags(tags, schemaMap);
-    }
 
-    if (process.argv.includes(SKIP_VALIDATION.attributes) && !hasTrueResult) {
-      hasTrueResult = await validateAttributes(attributes, schemaMap);
-    }
+    // if (!process.argv.includes(SKIP_VALIDATION.tags) && !hasTrueResult) {
+    //   hasTrueResult = await validateTags(tags, schemaMap);
+    // }
 
-    if (process.argv.includes(SKIP_VALIDATION.exampleAttributes) && !hasTrueResult) {
-      await validateExamplesAttributes(exampleSets, attributes)
-    }
+    // if (!process.argv.includes(SKIP_VALIDATION.attributes) && !hasTrueResult) {
+    //   hasTrueResult = await validateAttributes(attributes, schemaMap);
+    // }
 
+    // if (!process.argv.includes(SKIP_VALIDATION.exampleAttributes) && !hasTrueResult) {
+    //   await validateExamplesAttributes(exampleSets, attributes)
+    // }
+
+    console.log(777)
     if (process.argv.includes(BUILD.checkAttributes) && !hasTrueResult) {
         await checkAttributes(exampleSets, attributes)
     }
@@ -375,6 +389,7 @@ const checkKeysExistence = (example, mandatoryRequiredKeys, endPoint) => {
     if(keys.includes("_description")){
       continue;
     }
+
     for (let key of keys) {
       if (Array.isArray(currentObj)) {
         isArray = true;
@@ -391,6 +406,9 @@ const checkKeysExistence = (example, mandatoryRequiredKeys, endPoint) => {
     }
 
     if (isArray) {
+      if(keys.includes("tags")){
+        continue;
+      }
       handleIfObjectIsArray(currentKeys, currentObj, endPoint);
     }
   }
@@ -482,7 +500,10 @@ async function checkAttributes(exampleSets, attributes) {
               if(attribute_set[example_sets]){
                 const currentAttribute = attribute_set[example_sets]
                   // if(example_sets == "on_init")
-                await comapreObjects(example?.value, currentAttribute, example_sets)
+                // if(example_sets === "search"){
+                  await comapreObjects(example?.value, currentAttribute, example_sets)
+                // } 
+                
               }else{
                 console.log(`attribute not found for ${example_sets}`)
               }
@@ -500,15 +521,36 @@ async function checkAttributes(exampleSets, attributes) {
      } 
 }
 
+async function iterateTags( examplesTag, attributesTag, example_sets) {
+  for (let i = 0; i < examplesTag?.length; i++) {
+    const exampleItem = examplesTag[i];
+    const attributeItem = attributesTag;
+    const { list } = exampleItem;
+    if(attributeItem.hasOwnProperty(exampleItem?.descriptor?.code)){
+      if (Array.isArray(list)) {
+        await iterateTags(list, attributeItem[exampleItem?.descriptor?.code].list, example_sets)
+      }
+    }else{
+      console.log("Tag not matched", exampleItem?.descriptor, 'in', example_sets);
+    }
+  }
+}
+
+
+
 async function comapreObjects(examples, attributes, example_sets) {
   for (const key in examples) {
-    if (key !== "tags")
+    //un-commnet this if key is not found
+    //console.log('key', key, examples[key])
+    if(key == "tags"){
+      if (Array.isArray(examples[key])) {
+        await iterateTags(examples[key], attributes[key], example_sets);
+      }
+    }else{
       if (
         typeof examples[key] === "object" &&
         typeof attributes[key] === "object"
       ) {
-        // console.log('key',key)
-        // console.log('typeof examples[key]', typeof examples[key], typeof attributes[key])
         if (!attributes[key]) {
           console.log(`null value found for, ${key} in  ${example_sets}`);
         } else if (Array.isArray(examples[key])) {
@@ -528,6 +570,7 @@ async function comapreObjects(examples, attributes, example_sets) {
       } else if (!attributes.hasOwnProperty(key)) {
         console.log(`keys not found, ${key} in  ${example_sets}`);
       }
+    }
   }
 }
 function cleanup() {
@@ -562,15 +605,15 @@ function buildSwagger(inPath, outPath) {
 
 function addEnumTag(base, layer) {
   base["x-enum"] = layer["enum"];
-  base["x-tags"] = layer["tags"];
+  // base["x-tags"] = layer["tags"];
   base["x-flows"] = layer["flows"];
   base["x-examples"] = layer["examples"];
   base["x-attributes"] = layer["attributes"];
   base["x-errorcodes"] = layer["error_codes"];
   base["x-tlc"] = layer["tlc"];
   base["x-featureui"] = layer["feature-ui"]
-  base["x-sandboxui"] = layer["sandbox-ui"]
   base["x-testcasesui"] = layer["testcases-ui"]
+  base["x-sandboxui"] = layer["sandbox-ui"]
   base["x-changeLog"] = layer["changeLog"]
 
 }

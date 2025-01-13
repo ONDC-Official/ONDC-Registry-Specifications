@@ -1,5 +1,5 @@
 
-code: 
+type: 
   - code: buyerApp
     description: Describes that subscription call is for registering buyer app (bap)
     reference: <PR/Issue/Discussion Links md format text  
@@ -10,9 +10,9 @@ code:
     description: Describes that subscription call is for registering as a gateway
     reference: <PR/Issue/Discussion Links md format text  
 city_code:
-      - code: std:080
-        description: Represent the city code that identifies the cities. In case of '*' it will fetch all the cities where service is being provided.
-        reference: <PR/Issue/Discussion Links md format text>      
+  - code: std:080
+    description: Represent the city code that identifies the cities. In case of '*' it will fetch all the cities where service is being provided.
+    reference: <PR/Issue/Discussion Links md format text>      
 domain:
   - code: nic2004:52110
     description: Domain to be subscribed

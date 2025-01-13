@@ -805,6 +805,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/City'
+    # City:
+    #   type: "object"
+    #   properties:
+    #       description: Codification of city code will be using the std code of the city e.g. for Bengaluru, city code is 'std:080'        
+    #       type: string
+    #       example: "std:080"
+
     City:
       description: Codification of city code will be using the std code of the city e.g. for Bengaluru, city code is 'std:080'        
       type: string

@@ -3,7 +3,7 @@ context:
     ops_no: 1
 message:
   request_id: 27baa06d-f90a-486c-85e5-cc621b787f04
-  timestamp: 2022-07-08T13:44:54.101Z
+  timestamp: '2022-07-08T13:44:54.101Z'
   entity:
     gst:
       legal_entity_name: ABC Incorporates
@@ -14,7 +14,7 @@ message:
     pan:
       name_as_per_pan: ABC Incorporates
       pan_no: ASDFP7657Q
-      date_of_incorporation: 23/06/1982
+      # date_of_incorporation: 23/06/1982
     name_of_authorised_signatory: Anand Sharma
     address_of_authorised_signatory: 405, Pinnacle House, Kandiwali, Mumbai 400001
     email_id: anand.sharma@abc.com
@@ -26,8 +26,8 @@ message:
     key_pair:
       signing_public_key: QSax2KT4UiTUWUqoVUaEcWhBcGTTNu+Sf8EMDRY1GaE=
       encryption_public_key: O74ukMymk4KZnVs3sZhU2U7RXpaZ/qiOUMk5NWt6rbI=
-      valid_from: 2022-07-08T13:44:54.101Z
-      valid_until: 2022-07-08T13:44:54.101Z
+      valid_from: '2022-07-08T13:44:54.101Z'
+      valid_until: '2022-07-08T13:44:54.101Z'
   network_participant:
     - subscriber_url: /bapl
       domain: nic2004:52110

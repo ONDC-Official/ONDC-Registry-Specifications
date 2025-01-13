@@ -9,9 +9,18 @@ details:
         title Initializing Registry
         participant Network Participant
         participant Registry
+        participant Backend
         Network Participant->>Registry: subscribe
-        Registry->>Network Participant: (callback_url/on_subscribe) challenge
+        Registry ->> Backend : domain validation
+        Registry ->> Backend : SSL (OCSP) validation
+        Registry ->> Backend : signed key verification
+        Backend ->> Registry : encryped Challenged_string
+
+        Registry->>Network Participant: (callback_url/on_subscribe) challenge 
+        Network Participant ->> Registry : return decrypted challege string 
         Network Participant->>Registry: decrypt challenge
+        Registry ->> Backend : compair both the string 
+        Registry ->> Backend : equal/ Not equal
         Registry-->>Network Participant: Ack
 
 steps:

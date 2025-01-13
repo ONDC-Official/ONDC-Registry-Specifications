@@ -1,4 +1,4 @@
-
+                                          87
 // enums.js
 
 var parsedData
@@ -55,7 +55,7 @@ function loadDropdown4() {
 
 function getAttribute(data, keyArr) {
   let key = isNaN(keyArr[0]) ? keyArr[0] : parseInt(keyArr[0]);
-  if (data[key] && data[key] != undefined) {
+  if (data[key] && ata[key] != undefined) {
     if (keyArr.length == 1) {
       return data[key];
     }

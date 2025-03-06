@@ -1,0 +1,179 @@
+summary: Subscribe Flow
+details:
+  - description: To join the ONDC network, Network Participants (NPs) must be registered in the ONDC registry. Follow these prerequisites and steps to complete your onboarding for Staging, Pre-Production, and Production environments
+    mermaid: >-
+      sequenceDiagram
+        title  Prerequisites
+        participant NP as Network Participant (NP)
+        participant Portal as Network Participant Portal
+      
+        Note over NP: Start with domain setup
+        NP->>NP: Ensure a valid Fully Qualified Domain Name (FQDN)
+        Note over NP: SSL Certificate
+        NP->>NP: Obtain a valid SSL certificate for the domain
+        Note over NP: Proceed to whitelisting
+        NP->>Portal: Sign up on the Network Participant Portal
+        NP->>Portal: Submit environment access request (Staging/Pre-Prod/Prod)
+        Portal-->>NP: Approval (takes 6 to 48 hours)
+        Note over NP: Complete system configuration
+        NP->>NP: Configure the domain name and SSL certificate in the system
+  - description: >-
+     Steps
+          <p>
+        You can use the utility 
+        <a href="https://github.com/ONDC-Official/reference-implementations/tree/main/utilities/signing_and_verification" target="_blank" rel="noopener noreferrer">here</a> 
+        to perform these steps. Choose from the following technologies for generating key pairs:
+        </p>
+        <ul>
+            <li>
+                <a href="https://github.com/ONDC-Official/reference-implementations/tree/main/utilities/on_subscibe-service/java" target="_blank" rel="noopener noreferrer">Java</a>
+            </li>
+            <li>
+                <a href="https://github.com/ONDC-Official/reference-implementations/tree/main/utilities/signing_and_verification/python" target="_blank" rel="noopener noreferrer">Python</a>
+            </li>
+            <li>
+              <a href="https://github.com/ONDC-Official/reference-implementations/tree/main/utilities/signing_and_verification/golang target="_blank" rel="noopener noreferrer">GoLang</a>
+            </li>
+            <li>
+                <a href="https://github.com/ONDC-Official/reference-implementations/tree/main/utilities/signing_and_verification/node target="_blank" rel="noopener noreferrer">Node</a>
+            </li>
+            <li>
+                <a href="https://github.com/ONDC-Official/reference-implementations/tree/main/utilities/signing_and_verification/php target="_blank" rel="noopener noreferrer">PHP</a>
+            </li>
+
+       **Note**:  <a href="https://libsodium.gitbook.io/doc/bindings_for_other_languages target="_blank" rel="noopener noreferrer">Libsodium library</a>.
+      
+    mermaid: >-
+      sequenceDiagram
+        participant User as User
+        participant Utility as Key Generation Utility
+        User->>Utility: Use [Key Generation Utility]
+        Utility->>User: **Step 1: Generate Signing Key Pair** <br> Algorithm: Ed25519<br>Outputs: signing_public_key (Base64), signing_private_key (Base64)
+        Utility->>User: **Step 2: Generate Encryption Key Pair** <br> Algorithm: X25519<br>Outputs: encryption_public_key (ASN.1 DER Base64), encryption_private_key (Base64)
+        Note over Utility,User: Use [Libsodium library] for key pair generation
+  - description: >-
+     Endpoint Setup  
+      You can perform these steps using the utility  <a href="https://github.com/ONDC-Official/reference-implementations/tree/main/utilities/on_subscibe-servicet" target="_blank" rel="noopener noreferrer">here</a> . If a utility is not available for your tech stack, you may create one following the outlined steps. 
+      <ul>
+        <li> 
+          <b>Generate Unique Request ID</b>: Create a unique Request ID (request_id). This ID must be unique for each network participant and can be any format (e.g., UUID, number, or alphanumeric).</br>
+        </li>
+       <li> <b>Generate SIGNED_UNIQUE_REQ_ID </b>: 
+          Sign the request_id using the signing_private_key from Step 1. The signature should be created using the Ed25519 algorithm without hashing. The on_subscribe utility can help with this.  </br>
+       </li>
+       <li> <b>Create ondc-site-verification.html </b>: 
+          Place this file at the subscriber_id path and include the SIGNED_UNIQUE_REQ_ID generated in Step 4. The registry will check for this file at: https://<subscriber_id>/ondc-site-verification.html </br>
+        </li>
+         <li> <b>Configure /on_subscribe Endpoint </b>: 
+          Create the encryption shared key using the encryption_private_key (from Step 2) and the ONDC public key to decrypt the challenge_string received in the /on_subscribe call using the AES algorithm.</br>
+        </li>
+        <li> <b>Host /on_subscribe Post Endpoint</b>:
+          Deploy the <code>/on_subscribe</code> endpoint at: </br>
+          <pre style="background-color:#f6f8fa">https://&lt;subscriber_id&gt;/&lt;callback_url&gt;/on_subscribe </pre>
+          Use the (Node.JS, JAVA, Node, PHP)  <a href= "https://github.com/ONDC-Official/reference-implementations/tree/main/utilities/on_subscibe-service" target="_blank" rel="noopener noreferrer"> utility</a> to implement this endpoint.
+        </li>
+      </ul>    
+
+    mermaid: >-
+      sequenceDiagram
+        participant BuyerApp as Buyer App
+        participant Subscriber as Subscriber
+        participant Registry as ONDC Registry
+
+        BuyerApp->>Subscriber: Step 3: Generate unique Request ID (request_id)
+        Subscriber->>Subscriber: Step 4: Sign request_id with signing_private_key\n(SIGNED_UNIQUE_REQ_ID)
+        Subscriber->>Subscriber: Step 5: Create ondc-site-verification.html\nwith SIGNED_UNIQUE_REQ_ID
+        Note right of Subscriber: Place at https://<subscriber_id>/ondc-site-verification.html
+        Registry->>Subscriber: Verify ondc-site-verification.html
+        Subscriber->>Subscriber: Step 6: Configure /on_subscribe Endpoint\nGenerate shared encryption key
+        Note right of Subscriber: Use encryption_private_key and ONDC public key\nfor decryption
+        Subscriber->>Registry: Host /on_subscribe Post Endpoint\nhttps://<subscriber_id>/<callback_url>/on_subscribe
+        Note left of Registry: Verify endpoint using shared key
+  - description: >-
+      Refer to the SwaggerHub document and FAQs for `/subscribe` API**    
+      <ul>
+        <li>
+           <a href="https://app.swaggerhub.com/apis-docs/ONDC/ONDC-Registry-Onboarding/2.0.5#/ONDC%20Network%20Participant%20Onboarding/post_subscriber_url_on_subscribe" target="_blank" rel="noopener noreferrer">SwaggerHub Documentation</a> 
+        </li>
+      <li>
+        <a href="https://docs.google.com/document/d/15Dpy02lqtcU9tslyMqaI4UtnD2rtwnjAbn1narO0364/edit#heading=h.69ojsi3hg052" target="_blank" rel="noopener noreferrer">FAQs for Subscribe Payload</a> 
+        </li>
+      </ul>  
+      <ul>
+        <li> Create /subscribe request as follows: </li></br>
+         <pre style="background-color:#f6f8fa">
+          1.subscriber_id= YOUR SUBSCRIBER ID (abc.ondcapp.com)</br>
+          2.callback_url= Relative path to on_subscribe implementation</br>
+          3.subscriber_url = Relative path to the subscriber_id</br>
+          4.signing_public_key= {{value of sign_public_key generated in step 1}}</br>
+          5.encryption_public_key= {{value of enc_dec_public_key generated in step 2}}</br>
+          6.unique_key_id= {{generate a unique number for tracking key pairs}}</br>
+          7.For other fields, please refer below swaggerhub link and examples mentioned under heading as ops_no_1, ops_no_2, ops_no_3, ops_no_4 and ops_no_5
+          https://app.swaggerhub.com/apis-docs/ONDC/ONDC-Registry-Onboarding/2.0.5 
+         </pre>
+        </li>
+      </ul>    
+      <ul>
+        <li>Send created request to URL for /subscribe as below</li> </br>
+          <pre style="background-color:#f6f8fa">
+            # For Staging Onboarding: 
+            https://staging.registry.ondc.org/subscribe </br>
+
+            # For PreProd Onboarding: 
+            https://preprod.registry.ondc.org/ondc/subscribe </br>
+
+            # For Prod Onboarding:
+            https://prod.registry.ondc.org/subscribe
+
+          </pre>
+      </ul>
+      <ul>
+        <li>The call is received by the respective registry and following operations are performed:</li></br>
+          <ol>  
+            <li> /subscribe payload schema is verified</li>
+          <li> OCSP Check: SSL Certificate is verified</li>
+          <li>Domain Verification: ondc-site-verification.html is verified:
+            <ul>
+            <li>should be hosted on https://<subscriber_id>/ondc-site-verification.html</li>
+            <li>request_id should be signed using the signing private key (without hashing)</li>
+              </ul>
+            </li>
+            
+        <li>/on_susbcribe is called by the registry with a challenge string hosted on the callback_url</br>
+          <pre>https://&lt;subscriber_id&gt;/&lt;callback_url&gt;/on_subscribe </pre>
+          <pre style="background-color:#f6f8fa">
+                {
+                  "subscriber_id": "abc.com",
+                  "challenge": "encrypted_challenge_string"
+                }
+            </pre>
+         </li>
+        <li>
+          The challenge string should be decrypted using the shared key (generated in step 6) and answer should be provided as a sync response.</br>
+            <pre style="background-color:#f6f8fa">
+              {
+                "answer": "decrypted_challange_string"
+              }
+            </pre>
+        </li>    
+      </ol> 
+        <li>
+          Verify whether you have received a successful response. If a success response is not received, refer to the section listing possible errors. If the issue persists, kindly reach out to our support desk using the details provided in step 14 below.</br>
+            <pre style="background-color:#f6f8fa">
+              {
+                  "message": {
+                      "ack": {
+                          "status": "ACK"
+                      }
+                  },
+                  "error": {
+                      "type": null,
+                      "code": null,
+                      "path": null,
+                      "message": null
+                  }
+              }
+            </pre
+        </li>     
+      </ul>  
+      </ul>

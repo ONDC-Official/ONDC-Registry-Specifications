@@ -32,6 +32,9 @@ async function loadSteps(steps) {
         let result;
         if (mermaidGraph) {
           let removeBacktick = mermaidGraph?.replace(/`/g, "");
+          mermaid.initialize({
+            securityLevel: 'loose',
+          });
           result = await mermaid.render(`summary${index}`, removeBacktick);
         }
         const {svg} = result || ''
@@ -40,7 +43,7 @@ async function loadSteps(steps) {
           `${innerIndex + 1}) ${description}` +
           "<p>" +
           "<p>" +
-          svg +
+          (svg || '') +
           "<p>";
 
         mermaidDiv.appendChild(mermaidPane);
@@ -75,7 +78,6 @@ async function loadSteps(steps) {
 }
 
 function updateFlow() {
-  console.log("here-----2");
   var flowDropdown = document.getElementById("flow-dropdown");
   var selectedValue = flowDropdown.value;
   loadFlow(selectedValue);
@@ -103,7 +105,7 @@ async function loadFlow(flowName) {
       }
       const {svg} = result || ''
       mermaidPane.innerHTML =
-        "<p>" + `${index + 1}) ${description}` + "<p>" + "<p>" + svg + "<p>";
+        "<p>" + `${index + 1}) ${description}` + "<p>" + "<p>" + (svg || '') + "<p>";
 
       mermaidDiv.appendChild(mermaidPane);
     }

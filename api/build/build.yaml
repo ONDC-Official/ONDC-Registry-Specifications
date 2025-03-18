@@ -967,6 +967,33 @@ x-enum:
         country: *ref_5
         type: *ref_6
         subscriber_id: *ref_7
+x-tags:
+  search:
+    message:
+      intent:
+        payment:
+          tags:
+            - code: sample_tag
+              description: Describes the finder fees of the loan for buyer
+              reference: <PR/Issue/Discussion Links md format text>
+              list:
+                - code: sample_tags
+                  description: Buyer finder fee type.
+                  reference: <PR/Issue/Discussion Links md format text>
+                  list:
+                    - code: amount
+                      description: Describes, the Buyer App’s fee is a flat amount in INR.
+                      reference: <PR/Issue/Discussion Links md format text>
+                    - code: percent- annualized
+                      description: >-
+                        Describes, the Buyer App’s fee is set as a percentage of
+                        the Total Loan Disbursed for a 12-month tenure loan.
+                      reference: <PR/Issue/Discussion Links md format text>
+                    - code: percent
+                      description: >-
+                        Describes, the Buyer App’s fee is an absolute
+                        percentage.
+                      reference: <PR/Issue/Discussion Links md format text>
 x-flows:
   - summary: Registry sample flow
     details:

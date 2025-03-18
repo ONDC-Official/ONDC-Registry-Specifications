@@ -1390,16 +1390,3 @@ x-examples:
               city: std:080
               domain: nic2004:52110
               type: BAP or BPP
-x-attributes:
-  registry:
-    attribute_set:
-      lookup: []
-x-errorcodes:
-  code: []
-x-tlc:
-  code: []
-x-featureui:
-  filenames: []
-x-sandboxui:
-  dropdown:
-    - null

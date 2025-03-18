@@ -177,3 +177,11 @@ details:
         </li>     
       </ul>  
       </ul>
+steps: &steps
+  - &steps_0
+    summary: Subscribe call payload
+    reference: if any
+    api: search
+    example: 
+      value: 
+        $ref: ../../examples/registry/subscribe/subscribe.yaml    

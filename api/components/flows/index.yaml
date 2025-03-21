@@ -1,1 +1,5 @@
 - $ref: "./registry/index.yaml"
+- $ref: "./registry/onboarding.yaml"
+- $ref: "./registry/lookup.yaml"
+- $ref: "./registry/possible_errors.yaml"
+

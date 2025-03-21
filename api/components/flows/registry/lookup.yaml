@@ -1,0 +1,28 @@
+summary: Lookup Flow
+details:
+  - description: Check your record in registry lookup
+    mermaid: >-
+      sequenceDiagram
+        participant Client
+        participant ONDC_Registry
+
+        Client->>ONDC_Registry: POST /lookup request
+        Note right of Client: Request Payload: {country: "IND", domain: "ONDC:RET10"}
+
+        ONDC_Registry->>ONDC_Registry: Validate Request
+        ONDC_Registry->>ONDC_Registry: Search for Matching Records
+        ONDC_Registry-->>Client: Return Lookup Response
+  - description: >-
+      <p>Curl request:</p>
+      <pre style="background-color:#f6f8fa">
+          	curl --location --request POST 'https://preprod.registry.ondc.org/ondc/lookup' \
+              --header 'Content-Type: application/json' \
+              --data-raw '{
+
+                  "country": "IND",
+                  "domain":"ONDC:RET10"
+
+              }'
+          
+      </pre>     
+

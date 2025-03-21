@@ -2,6 +2,7 @@
 
 
 function loadSwaggerUIFile(yamlFile) {
+  console.log('dasdsd')
   const ui = SwaggerUIBundle({
     spec: jsyaml.load(yamlFile),
     dom_id: '#swagger-ui',
